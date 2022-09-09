@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login_registration_app/constants/app_colors.dart';
+import 'package:login_registration_app/shared/app_localizations/localization.dart';
 import 'package:login_registration_app/shared/info_button_row.dart';
 import 'package:login_registration_app/shared/main_app_bar_widget.dart';
 import 'package:login_registration_app/shared/horizontal_padded_widget.dart';
@@ -51,16 +52,17 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Widget _renderCompanyDetailsInfo() {
-    return const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 32),
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32),
         child: Text(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque egestas ultrices maecenas lorem massa mattis malesuada ullamcorper aliquam. '));
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque egestas ultrices maecenas lorem massa mattis malesuada ullamcorper aliquam.'
+                .tr()));
   }
 
   Widget _renderSignInTitle() {
-    return const Text(
-      'Sign in to your account',
-      style: TextStyle(
+    return Text(
+      'Sign in to your account'.tr(),
+      style: const TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.w700,
           color: AppColors.tuataraColor),
@@ -97,14 +99,17 @@ class _SignInScreenState extends State<SignInScreen> {
                 color: AppColors.pampasColor, borderRadius: borderRadius),
             child: TextFormField(),
           ),
-          const Text(
-            'Forgot password?',
-            style: TextStyle(
-                decoration: TextDecoration.underline,
-                color: AppColors.tuataraColor,
-                fontSize: 16,
-                fontWeight: FontWeight.w400),
-          ),
+          InkWell(
+              onTap: () =>
+                  Navigator.pushNamed(context, '/recoveryPasswordScreen'),
+              child: Text(
+                'Forgot password?'.tr(),
+                style: const TextStyle(
+                    decoration: TextDecoration.underline,
+                    color: AppColors.tuataraColor,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400),
+              )),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 32),
             child: Container(
@@ -119,7 +124,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         color: Colors.black.withOpacity(0.3))
                   ]),
               child: Text(
-                'Sign In'.toUpperCase(),
+                'Sign in'.toUpperCase().tr(),
                 style: const TextStyle(
                     color: AppColors.pampasColor,
                     fontSize: 16,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_registration_app/shared/app_localizations/localization.dart';
 
 import '../constants/app_colors.dart';
 import 'horizontal_padded_widget.dart';
@@ -22,7 +23,7 @@ class InfoButtonRow extends StatelessWidget {
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       Text(
-        message,
+        message.tr(),
         style: const TextStyle(
             color: AppColors.tuataraColor,
             fontSize: 16,
@@ -37,7 +38,7 @@ class InfoButtonRow extends StatelessWidget {
                     color: Colors.white.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(4)),
             child: Text(
-              buttonTitle.toUpperCase(),
+              buttonTitle.toUpperCase().tr(),
               style: const TextStyle(
                   color: AppColors.curiousBlueColor,
                   fontSize: 16,

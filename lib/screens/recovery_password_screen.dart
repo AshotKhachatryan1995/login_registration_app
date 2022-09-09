@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login_registration_app/constants/app_colors.dart';
+import 'package:login_registration_app/shared/app_localizations/localization.dart';
 import 'package:login_registration_app/shared/custom_divider.dart';
 import 'package:login_registration_app/shared/detail_app_bar_widget.dart';
 import 'package:login_registration_app/shared/info_button_row.dart';
@@ -7,6 +8,8 @@ import 'package:login_registration_app/shared/info_button_row.dart';
 import '../shared/input_form_widget.dart';
 
 class RecoveryPasswordScreen extends StatefulWidget {
+  static const String route = '/recoveryPasswordScreen';
+
   const RecoveryPasswordScreen({super.key});
 
   @override
@@ -44,15 +47,16 @@ class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
                   ]),
             )),
         InputFormWidget(
-          formTitle: 'Recover your password',
+          formTitle: 'Recover your password'.tr(),
           child: Column(
             children: [
               const SizedBox(height: 32),
-              const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 32),
+              Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 32),
                   child: Text(
-                    'Please, enter your username, phone number, email or ID number to search for your account',
-                    style: TextStyle(
+                    'Please, enter your username, phone number, email or ID number to search for your account'
+                        .tr(),
+                    style: const TextStyle(
                         color: AppColors.tuataraColor,
                         fontSize: 16,
                         fontWeight: FontWeight.w400),

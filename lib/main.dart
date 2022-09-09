@@ -92,6 +92,11 @@ Widget _materialApp(NavigationState state) {
                       builder: (context) => const SignInScreen());
                 }
 
+                if (settings.name == RecoveryPasswordScreen.route) {
+                  return MaterialPageRoute(
+                      builder: (context) => const RecoveryPasswordScreen());
+                }
+
                 assert(false, 'Need to implement ${settings.name}');
                 return null;
               })));
@@ -99,7 +104,7 @@ Widget _materialApp(NavigationState state) {
 
 Widget _mainRoute(NavigationState state) {
   if (state is UnAuthenticatedState) {
-    return const RecoveryPasswordScreen();
+    return const SignInScreen();
   }
 
   if (state is AuthenticatedState) {

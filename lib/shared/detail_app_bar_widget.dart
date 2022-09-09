@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_registration_app/shared/app_localizations/localization.dart';
 import 'package:login_registration_app/shared/custom_divider.dart';
 
 import '../constants/app_colors.dart';
@@ -26,9 +27,10 @@ class DetailAppBarWidget extends StatelessWidget {
   }
 
   Widget _renderDetailsInfo() {
-    return const Text(
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.  ...',
-      style: TextStyle(
+    return Text(
+      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.  ...'
+          .tr(),
+      style: const TextStyle(
           color: AppColors.tuataraColor,
           fontSize: 16,
           fontWeight: FontWeight.w600),

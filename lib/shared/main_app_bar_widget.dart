@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_registration_app/shared/app_localizations/localization.dart';
 
 import '../constants/app_colors.dart';
 
@@ -36,11 +37,11 @@ class MainAppBarWidget extends StatelessWidget {
         Padding(
             padding: const EdgeInsets.fromLTRB(11, 9, 0, 9),
             child: _renderLogo()),
-        const Padding(
-            padding: EdgeInsets.fromLTRB(10, 15, 15, 15),
+        Padding(
+            padding: const EdgeInsets.fromLTRB(10, 15, 15, 15),
             child: Text(
-              'Go to the ID Website',
-              style: TextStyle(color: AppColors.tuataraColor),
+              'Go to the ID Website'.tr(),
+              style: const TextStyle(color: AppColors.tuataraColor),
             ))
       ]),
     );
