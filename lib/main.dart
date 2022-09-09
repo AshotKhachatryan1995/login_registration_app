@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_registration_app/screens/recovery_password_screen.dart';
 import 'package:login_registration_app/screens/sign_in_screen.dart';
-
 import 'blocs/navigation_bloc/navigation_bloc.dart';
 import 'blocs/navigation_bloc/navigation_event.dart';
 import 'blocs/navigation_bloc/navigation_state.dart';
 import 'middleware/preferances/shared_preferance.dart';
 import 'screens/home_screen.dart';
+import 'shared/app_localizations/app_localizations.dart';
+import 'shared/countries/country_loader.dart';
 import 'shared/loading_widget.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +30,13 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late final NavigationBloc _navigationBloc;
+
+  @override
+  void initState() {
+    super.initState();
+
+    CountryLoader.instance.load();
+  }
 
   @override
   void dispose() {
@@ -58,6 +67,16 @@ Widget _materialApp(NavigationState state) {
       data: ThemeData.light(),
       child: MaterialApp(
           home: _mainRoute(state),
+          supportedLocales: const [
+            Locale('en', 'US'),
+            Locale('ru', 'RU'),
+          ],
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
           onGenerateRoute: (settings) {
             if (settings.name == HomeScreen.route) {
               return MaterialPageRoute(builder: (context) => _mainRoute(state));
