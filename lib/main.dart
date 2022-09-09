@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:login_registration_app/middleware/notifiers/locale_change_notifier.dart';
 import 'package:login_registration_app/screens/recovery_password_screen.dart';
 import 'package:login_registration_app/screens/sign_in_screen.dart';
+import 'package:provider/provider.dart';
 import 'blocs/navigation_bloc/navigation_bloc.dart';
 import 'blocs/navigation_bloc/navigation_event.dart';
 import 'blocs/navigation_bloc/navigation_state.dart';
@@ -63,33 +65,36 @@ Widget _render() {
 }
 
 Widget _materialApp(NavigationState state) {
-  return Theme(
-      data: ThemeData.light(),
-      child: MaterialApp(
-          home: _mainRoute(state),
-          supportedLocales: const [
-            Locale('en', 'US'),
-            Locale('ru', 'RU'),
-          ],
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          onGenerateRoute: (settings) {
-            if (settings.name == HomeScreen.route) {
-              return MaterialPageRoute(builder: (context) => _mainRoute(state));
-            }
+  return ChangeNotifierProvider<LocaleChangeNotifer>(
+      create: (context) => LocaleChangeNotifer(),
+      child: Consumer<LocaleChangeNotifer>(
+          builder: (context, notifer, child) => MaterialApp(
+              home: _mainRoute(state),
+              locale: notifer.currentLocale,
+              supportedLocales: const [
+                Locale('en', 'US'),
+                Locale('ru', 'RU'),
+              ],
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              onGenerateRoute: (settings) {
+                if (settings.name == HomeScreen.route) {
+                  return MaterialPageRoute(
+                      builder: (context) => _mainRoute(state));
+                }
 
-            if (settings.name == SignInScreen.route) {
-              return MaterialPageRoute(
-                  builder: (context) => const SignInScreen());
-            }
+                if (settings.name == SignInScreen.route) {
+                  return MaterialPageRoute(
+                      builder: (context) => const SignInScreen());
+                }
 
-            assert(false, 'Need to implement ${settings.name}');
-            return null;
-          }));
+                assert(false, 'Need to implement ${settings.name}');
+                return null;
+              })));
 }
 
 Widget _mainRoute(NavigationState state) {

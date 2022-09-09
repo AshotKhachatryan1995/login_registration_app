@@ -42,6 +42,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   country_codes: ^2.2.0
+  provider: ^6.0.3
 
 dev_dependencies:
   flutter_test:
