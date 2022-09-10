@@ -1,10 +1,28 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:login_registration_app/middleware/preferances/localization_preferance.dart';
 import 'package:login_registration_app/shared/app_localizations/localization.dart';
 
 import '../constants/app_colors.dart';
 
-class MainAppBarWidget extends StatelessWidget {
-  const MainAppBarWidget({super.key});
+class MainAppBarWidget extends StatefulWidget {
+  const MainAppBarWidget({required this.onLocaleChange, super.key});
+
+  final StringCallback onLocaleChange;
+
+  @override
+  State<StatefulWidget> createState() => _MainAppBarWidgetState();
+}
+
+class _MainAppBarWidgetState extends State<MainAppBarWidget> {
+  List<String> list = LocalizationPreferance.localies;
+  late String dropdownValue;
+
+  @override
+  void initState() {
+    super.initState();
+    dropdownValue = list.first;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,16 +68,42 @@ class MainAppBarWidget extends StatelessWidget {
   Widget _renderLanguageArea() {
     return Container(
         height: 48,
-        width: 48,
         decoration: BoxDecoration(
-            color: AppColors.pampasColor,
             borderRadius: BorderRadius.circular(4),
             border: Border.all(
                 color: AppColors.tuataraColor.withOpacity(0.1), width: 0.5)),
-        child: Image.asset('assets/icons/usa_icon.png'));
+        child: DropdownButton2<String>(
+            value: dropdownValue,
+            alignment: Alignment.center,
+            underline: const SizedBox(),
+            onChanged: (String? val) {
+              widget.onLocaleChange.call(val);
+              if (val != null) {
+                setState(() {
+                  dropdownValue = val;
+                });
+              }
+            },
+            buttonPadding: EdgeInsets.zero,
+            itemPadding: EdgeInsets.zero,
+            barrierColor: Colors.black.withOpacity(0.2),
+            icon: const SizedBox(),
+            items: list.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Image.asset(
+                  value == 'en'
+                      ? 'assets/icons/usa_icon.png'
+                      : 'assets/icons/rus_icon.png',
+                  width: 48,
+                ),
+              );
+            }).toList()));
   }
 
   Widget _renderLogo() {
     return Image.asset('assets/icons/logo.png');
   }
 }
+
+typedef StringCallback = void Function(String?);

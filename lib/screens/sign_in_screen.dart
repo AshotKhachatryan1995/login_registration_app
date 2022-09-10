@@ -3,12 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_registration_app/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:login_registration_app/blocs/sign_in_bloc/sign_in_state.dart';
 import 'package:login_registration_app/constants/app_colors.dart';
+import 'package:login_registration_app/middleware/notifiers/locale_change_notifier.dart';
 import 'package:login_registration_app/middleware/repositories/api_respository_impl.dart';
 import 'package:login_registration_app/shared/app_localizations/localization.dart';
 import 'package:login_registration_app/shared/info_button_row.dart';
 import 'package:login_registration_app/shared/main_app_bar_widget.dart';
 import 'package:login_registration_app/shared/horizontal_padded_widget.dart';
 import 'package:login_registration_app/shared/text_field_widget.dart';
+import 'package:provider/provider.dart';
 
 import '../blocs/sign_in_bloc/sign_in_event.dart';
 import '../middleware/controllers/login_controllers.dart';
@@ -46,15 +48,6 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return BlocProvider<SignInBloc>(
         create: (context) => _signInBloc,
-        child: GestureDetector(
-            onTap: () => FocusScope.of(context).unfocus(),
-            child: Scaffold(
-                backgroundColor: AppColors.pampasColor,
-                appBar: const PreferredSize(
-                    preferredSize: Size(0, 120), child: MainAppBarWidget()),
-                body: _renderBody())));
-    return BlocProvider<SignInBloc>(
-        create: (context) => _signInBloc,
         child: BlocConsumer<SignInBloc, SignInState>(
             listener: _listener,
             builder: (context, state) => LoadingWidget(
@@ -63,14 +56,19 @@ class _SignInScreenState extends State<SignInScreen> {
                     onTap: () => FocusScope.of(context).unfocus(),
                     child: Scaffold(
                         backgroundColor: AppColors.pampasColor,
-                        appBar: const PreferredSize(
-                            preferredSize: Size(0, 120),
-                            child: MainAppBarWidget()),
+                        appBar: PreferredSize(
+                            preferredSize: const Size(0, 120),
+                            child: MainAppBarWidget(
+                                onLocaleChange: (String? val) =>
+                                    Provider.of<LocaleChangeNotifer>(context,
+                                            listen: false)
+                                        .changeLocale(val))),
                         body: _renderBody())))));
   }
 
   Widget _renderBody() {
-    return Column(children: [
+    return SingleChildScrollView(
+        child: Column(children: [
       _renderCompanyInfo(),
       _renderCompanyDetailsInfo(),
       const SizedBox(height: 34),
@@ -81,7 +79,7 @@ class _SignInScreenState extends State<SignInScreen> {
         buttonTitle: 'Create',
         onTapButton: () => Navigator.pushNamed(context, '/registration'),
       )
-    ]);
+    ]));
   }
 
   Widget _renderCompanyInfo() {

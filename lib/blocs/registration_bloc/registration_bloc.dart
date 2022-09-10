@@ -10,21 +10,11 @@ import 'registration_state.dart';
 
 class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
   RegistrationBloc(this._apiRepositoryImpl) : super(InitialState()) {
-    on<TextFieldValueChangedEvent>(_onTextFieldValueChangedEvent);
     on<CreateUserEvent>(_onCreateUserEvent);
   }
 
   final _sharedPrefs = SharedPrefs();
   final ApiRepositoryImpl _apiRepositoryImpl;
-
-  Future<void> _onTextFieldValueChangedEvent(
-      TextFieldValueChangedEvent event, Emitter<RegistrationState> emit) async {
-    final controllers = event.controllers;
-
-    final isValid = controllers.areNotEmpty;
-
-    emit(ButtonState(isActive: isValid));
-  }
 
   Future<void> _onCreateUserEvent(
       CreateUserEvent event, Emitter<RegistrationState> emit) async {

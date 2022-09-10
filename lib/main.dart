@@ -4,6 +4,7 @@ import 'package:login_registration_app/middleware/notifiers/locale_change_notifi
 import 'package:login_registration_app/screens/recovery_password_screen.dart';
 import 'package:login_registration_app/screens/registration_screen.dart';
 import 'package:login_registration_app/screens/sign_in_screen.dart';
+import 'package:login_registration_app/screens/verify_account_screen.dart';
 import 'package:provider/provider.dart';
 import 'blocs/navigation_bloc/navigation_bloc.dart';
 import 'blocs/navigation_bloc/navigation_event.dart';
@@ -21,10 +22,10 @@ import 'package:path_provider/path_provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // final appDocumentDirectory = await getApplicationDocumentsDirectory();
+  final appDocumentDirectory = await getApplicationDocumentsDirectory();
 
-  // Hive.init(appDocumentDirectory.path);
-  // Hive.registerAdapter(UserAdapter());
+  Hive.init(appDocumentDirectory.path);
+  Hive.registerAdapter(UserAdapter());
 
   /// Initialize preferences
   await SharedPrefs().init();
@@ -68,52 +69,57 @@ class _MyAppState extends State<MyApp> {
 }
 
 Widget _render() {
-  return BlocBuilder<NavigationBloc, NavigationState>(
-    builder: (context, state) => _materialApp(state),
-  );
+  return _materialApp();
 }
 
-Widget _materialApp(NavigationState state) {
+Widget _materialApp() {
   return ChangeNotifierProvider<LocaleChangeNotifer>(
       create: (context) => LocaleChangeNotifer(),
-      child: Consumer<LocaleChangeNotifer>(
-          builder: (context, notifer, child) => MaterialApp(
-              home: _mainRoute(state),
-              locale: notifer.currentLocale,
-              supportedLocales: const [
-                Locale('en', 'US'),
-                Locale('ru', 'RU'),
-              ],
-              localizationsDelegates: const [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              onGenerateRoute: (settings) {
-                if (settings.name == HomeScreen.route) {
-                  return MaterialPageRoute(
-                      builder: (context) => _mainRoute(state));
-                }
+      child: Consumer<LocaleChangeNotifer>(builder: (context, notifer, child) {
+        return BlocBuilder<NavigationBloc, NavigationState>(
+            builder: (context, state) => MaterialApp(
+                home: _mainRoute(state),
+                locale: notifer.currentLocale,
+                supportedLocales: const [
+                  Locale('en', 'US'),
+                  Locale('ru', 'RU'),
+                ],
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                onGenerateRoute: (settings) {
+                  if (settings.name == HomeScreen.route) {
+                    return MaterialPageRoute(
+                        builder: (context) => _mainRoute(state));
+                  }
 
-                if (settings.name == SignInScreen.route) {
-                  return MaterialPageRoute(
-                      builder: (context) => const SignInScreen());
-                }
+                  if (settings.name == SignInScreen.route) {
+                    return MaterialPageRoute(
+                        builder: (context) => const SignInScreen());
+                  }
 
-                if (settings.name == RecoveryPasswordScreen.route) {
-                  return MaterialPageRoute(
-                      builder: (context) => const RecoveryPasswordScreen());
-                }
+                  if (settings.name == RecoveryPasswordScreen.route) {
+                    return MaterialPageRoute(
+                        builder: (context) => const RecoveryPasswordScreen());
+                  }
 
-                if (settings.name == RegistrationScreen.route) {
-                  return MaterialPageRoute(
-                      builder: (context) => const RegistrationScreen());
-                }
+                  if (settings.name == RegistrationScreen.route) {
+                    return MaterialPageRoute(
+                        builder: (context) => const RegistrationScreen());
+                  }
 
-                assert(false, 'Need to implement ${settings.name}');
-                return null;
-              })));
+                  if (settings.name == VerifyAccountScreen.route) {
+                    return MaterialPageRoute(
+                        builder: (context) => const VerifyAccountScreen());
+                  }
+
+                  assert(false, 'Need to implement ${settings.name}');
+                  return null;
+                }));
+      }));
 }
 
 Widget _mainRoute(NavigationState state) {

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:login_registration_app/constants/app_colors.dart';
 import 'package:login_registration_app/shared/app_localizations/localization.dart';
 import 'package:login_registration_app/shared/custom_divider.dart';
-import 'package:login_registration_app/shared/detail_app_bar_widget.dart';
 import 'package:login_registration_app/shared/info_button_row.dart';
+import 'package:login_registration_app/shared/unfocus_scaffold.dart';
 
 import '../shared/custom_button.dart';
 import '../shared/input_form_widget.dart';
@@ -21,16 +21,12 @@ class RecoveryPasswordScreen extends StatefulWidget {
 class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.pampasColor,
-      appBar: const PreferredSize(
-          preferredSize: Size(0, 120), child: DetailAppBarWidget()),
-      body: _renderBody(),
-    );
+    return UnfocusScaffold(body: _renderBody());
   }
 
   Widget _renderBody() {
-    return Column(
+    return SingleChildScrollView(
+        child: Column(
       children: [
         Container(
             color: AppColors.springWoodColor,
@@ -73,7 +69,7 @@ class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
         const SizedBox(height: 16),
         _renderButtons()
       ],
-    );
+    ));
   }
 
   Widget _renderButtons() {

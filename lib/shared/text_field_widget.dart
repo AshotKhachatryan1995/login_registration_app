@@ -5,15 +5,19 @@ class TextFieldWidget extends StatelessWidget {
   const TextFieldWidget(
       {required this.controller,
       required this.hintText,
-      this.onChanged,
       this.obscureText = false,
+      this.textAlign = TextAlign.left,
+      this.keyboardType,
+      this.onChanged,
       Key? key})
       : super(key: key);
 
   final TextEditingController controller;
   final String hintText;
-  final StringCallback? onChanged;
   final bool obscureText;
+  final TextAlign textAlign;
+  final TextInputType? keyboardType;
+  final StringCallback? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +26,21 @@ class TextFieldWidget extends StatelessWidget {
         child: TextFormField(
           controller: controller,
           cursorColor: AppColors.keppelColor,
+          textAlign: textAlign,
+          keyboardType: keyboardType,
           decoration: InputDecoration(
-              labelText: hintText,
+              label: Align(
+                  alignment: textAlign == TextAlign.center
+                      ? Alignment.center
+                      : Alignment.centerLeft,
+                  child: Text(hintText)),
               disabledBorder: InputBorder.none,
               border: InputBorder.none,
               hintStyle: const TextStyle(
-                  color: AppColors.tuataraColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400),
+                color: AppColors.tuataraColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
               fillColor: AppColors.pampasColor,
               filled: true,
               focusedBorder: const OutlineInputBorder(

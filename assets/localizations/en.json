@@ -12,5 +12,8 @@
     "Forgot password?": "Forgot password?",
     "Go to the ID Website": "Go to the ID Website",
     "cancel": "cancel",
-    "recover": "recover"
+    "recover": "recover",
+    "create": "create",
+    "Resend": "Resend",
+    "Haven’t recieced yet?": "Haven’t recieced yet?"
 }

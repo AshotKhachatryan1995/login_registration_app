@@ -11,14 +11,6 @@ class InitialState extends RegistrationState {}
 
 class LoadingState extends RegistrationState {}
 
-class ButtonState extends RegistrationState {
-  ButtonState({required this.isActive});
-  final bool isActive;
-
-  @override
-  List<Object> get props => [isActive];
-}
-
 class CreateNewUserState extends RegistrationState {
   CreateNewUserState({required this.user});
   final User user;
