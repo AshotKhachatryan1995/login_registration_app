@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_registration_app/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:login_registration_app/blocs/sign_in_bloc/sign_in_state.dart';
 import 'package:login_registration_app/constants/app_colors.dart';
+import 'package:login_registration_app/middleware/repositories/api_respository_impl.dart';
 import 'package:login_registration_app/shared/app_localizations/localization.dart';
 import 'package:login_registration_app/shared/info_button_row.dart';
 import 'package:login_registration_app/shared/main_app_bar_widget.dart';
@@ -29,7 +30,7 @@ class _SignInScreenState extends State<SignInScreen> {
   void initState() {
     super.initState();
 
-    _signInBloc = SignInBloc();
+    _signInBloc = SignInBloc(ApiRepositoryImpl());
   }
 
   @override

@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:login_registration_app/middleware/extensions/string_extension.dart';
+import 'package:login_registration_app/middleware/repositories/api_respository_impl.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../middleware/models/user.dart';
@@ -10,12 +11,13 @@ import 'registration_event.dart';
 import 'registration_state.dart';
 
 class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
-  RegistrationBloc() : super(InitialState()) {
+  RegistrationBloc(this._apiRepositoryImpl) : super(InitialState()) {
     on<TextFieldValueChangedEvent>(_onTextFieldValueChangedEvent);
     on<CreateUserEvent>(_onCreateUserEvent);
   }
 
   final _sharedPrefs = SharedPrefs();
+  final ApiRepositoryImpl _apiRepositoryImpl;
 
   Future<void> _onTextFieldValueChangedEvent(
       TextFieldValueChangedEvent event, Emitter<RegistrationState> emit) async {
@@ -41,28 +43,21 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
         password: controllers.passwordController.text.generateMd5());
 
     try {
-      final box = await Hive.openBox<User>('users_db');
+      final result = await _apiRepositoryImpl.createUser(user: user);
 
-      final userEmail =
-          box.values.firstWhereOrNull((element) => element.email == user.email);
-
-      final userPhone =
-          box.values.firstWhereOrNull((element) => element.phone == user.phone);
-
-      if (userPhone != null || userEmail != null) {
-        emit(UserAlreadyExists());
+      if (result == null) {
+        emit(UserCreateInvalidState());
         return;
       }
 
-      await box.put(user.id, user);
-      await _sharedPrefs.setString('userId', user.id);
-
-      await box.close();
+      if (result is String) {
+        await _sharedPrefs.setString('userId', user.id);
+        emit(UserCreatedSuccessfullyState());
+      }
     } catch (e) {
-      emit(UserCreateInvalidState());
       throw Exception(e.toString());
     }
 
-    emit(UserCreatedSuccessfullyState());
+    emit(UserCreateInvalidState());
   }
 }

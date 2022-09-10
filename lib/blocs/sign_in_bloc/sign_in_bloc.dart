@@ -1,19 +1,18 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:login_registration_app/middleware/extensions/string_extension.dart';
+import 'package:login_registration_app/middleware/repositories/api_respository_impl.dart';
 
-import '../../middleware/models/user.dart';
 import '../../middleware/preferances/shared_preferance.dart';
 import 'sign_in_event.dart';
 import 'sign_in_state.dart';
 
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
-  SignInBloc() : super(InitialState()) {
+  SignInBloc(this._apiRepositoryImpl) : super(InitialState()) {
     on<TextFieldValueChangedEvent>(_onTextFieldValueChangedEvent);
     on<UserSignInEvent>(_onUserSignInEvent);
   }
 
   final _sharedPrefs = SharedPrefs();
+  final ApiRepositoryImpl _apiRepositoryImpl;
 
   Future<void> _onTextFieldValueChangedEvent(
       TextFieldValueChangedEvent event, Emitter<SignInState> emit) async {
@@ -27,26 +26,26 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   Future<void> _onUserSignInEvent(
       UserSignInEvent event, Emitter<SignInState> emit) async {
     emit(LoadingState());
-    final box = await Hive.openBox<User>('users_db');
 
     final userName = event.controllers.userNameController.text;
     final password = event.controllers.passwordController.text;
-    final users = box.values
-        .where((user) => user.email == userName || user.phone == userName)
-        .toList();
+    try {
+      final result = await _apiRepositoryImpl.signIn(
+          userName: userName, password: password);
 
-    if (users.isEmpty) {
-      emit(UserSignInInvalidState());
-      return;
-    }
+      if (result == null) {
+        emit(UserSignInInvalidState());
+        return;
+      }
 
-    final user = users.first;
+      if (result is String) {
+        await _sharedPrefs.setString('userId', result);
 
-    if (user.password == password.generateMd5()) {
-      await _sharedPrefs.setString('userId', user.id);
-
-      emit(UserSignInSuccessfullyState());
-      return;
+        emit(UserSignInSuccessfullyState());
+        return;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
     }
 
     emit(UserSignInInvalidState());
