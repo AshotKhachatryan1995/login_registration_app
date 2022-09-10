@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_registration_app/constants/app_colors.dart';
 
 class TextFieldWidget extends StatelessWidget {
   const TextFieldWidget(
@@ -17,17 +18,25 @@ class TextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        decoration: BoxDecoration(
-            border: Border.all(), borderRadius: BorderRadius.circular(10)),
+        margin: const EdgeInsets.all(16),
         child: TextFormField(
           controller: controller,
-          cursorColor: Colors.black,
+          cursorColor: AppColors.keppelColor,
           decoration: InputDecoration(
-            border: InputBorder.none,
-            hintText: hintText,
-          ),
+              labelText: hintText,
+              disabledBorder: InputBorder.none,
+              border: InputBorder.none,
+              hintStyle: const TextStyle(
+                  color: AppColors.tuataraColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400),
+              fillColor: AppColors.pampasColor,
+              filled: true,
+              focusedBorder: const OutlineInputBorder(
+                borderSide:
+                    BorderSide(color: AppColors.curiousBlueColor, width: 1),
+              ),
+              hintText: hintText),
           onChanged: onChanged,
           obscureText: obscureText,
         ));

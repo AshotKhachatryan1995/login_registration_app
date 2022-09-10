@@ -8,7 +8,7 @@ import 'package:login_registration_app/shared/info_button_row.dart';
 import '../shared/input_form_widget.dart';
 
 class RecoveryPasswordScreen extends StatefulWidget {
-  static const String route = '/recoveryPasswordScreen';
+  static const String route = '/recoveryPassword';
 
   const RecoveryPasswordScreen({super.key});
 

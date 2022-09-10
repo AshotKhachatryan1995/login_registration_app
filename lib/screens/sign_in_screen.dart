@@ -8,6 +8,7 @@ import 'package:login_registration_app/shared/app_localizations/localization.dar
 import 'package:login_registration_app/shared/info_button_row.dart';
 import 'package:login_registration_app/shared/main_app_bar_widget.dart';
 import 'package:login_registration_app/shared/horizontal_padded_widget.dart';
+import 'package:login_registration_app/shared/text_field_widget.dart';
 
 import '../blocs/sign_in_bloc/sign_in_event.dart';
 import '../middleware/controllers/login_controllers.dart';
@@ -45,6 +46,15 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return BlocProvider<SignInBloc>(
         create: (context) => _signInBloc,
+        child: GestureDetector(
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: Scaffold(
+                backgroundColor: AppColors.pampasColor,
+                appBar: const PreferredSize(
+                    preferredSize: Size(0, 120), child: MainAppBarWidget()),
+                body: _renderBody())));
+    return BlocProvider<SignInBloc>(
+        create: (context) => _signInBloc,
         child: BlocConsumer<SignInBloc, SignInState>(
             listener: _listener,
             builder: (context, state) => LoadingWidget(
@@ -66,9 +76,10 @@ class _SignInScreenState extends State<SignInScreen> {
       const SizedBox(height: 34),
       _renderSignInTitle(),
       _renderSignInForm(),
-      const InfoButtonRow(
+      InfoButtonRow(
         message: 'Don’t have an account?',
         buttonTitle: 'Create',
+        onTapButton: () => Navigator.pushNamed(context, '/registration'),
       )
     ]);
   }
@@ -120,23 +131,17 @@ class _SignInScreenState extends State<SignInScreen> {
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Container(
-            height: 48,
-            margin: const EdgeInsets.symmetric(vertical: 32),
-            decoration: BoxDecoration(
-                color: AppColors.pampasColor, borderRadius: borderRadius),
-            child: TextFormField(),
-          ),
-          Container(
-            height: 48,
-            margin: const EdgeInsets.only(bottom: 8),
-            decoration: BoxDecoration(
-                color: AppColors.pampasColor, borderRadius: borderRadius),
-            child: TextFormField(),
-          ),
+          TextFieldWidget(
+              controller: _controllers.userNameController,
+              onChanged: _onChanged,
+              hintText: 'Username'),
+          TextFieldWidget(
+              controller: _controllers.passwordController,
+              obscureText: true,
+              onChanged: _onChanged,
+              hintText: 'Password'),
           InkWell(
-              onTap: () =>
-                  Navigator.pushNamed(context, '/recoveryPasswordScreen'),
+              onTap: () => Navigator.pushNamed(context, '/recoveryPassword'),
               child: Text(
                 'Forgot password?'.tr(),
                 style: const TextStyle(
@@ -145,12 +150,22 @@ class _SignInScreenState extends State<SignInScreen> {
                     fontSize: 16,
                     fontWeight: FontWeight.w400),
               )),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 32),
-            child: Container(
+          _renderSignInButton()
+        ],
+      )),
+    );
+  }
+
+  Widget _renderSignInButton() {
+    return BlocBuilder<SignInBloc, SignInState>(builder: (context, state) {
+      final isActive = (state is ButtonState) ? state.isActive : false;
+
+      return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 32),
+          child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
               decoration: BoxDecoration(
-                  color: AppColors.curiousBlueColor,
+                  color: isActive ? AppColors.curiousBlueColor : Colors.white,
                   borderRadius: borderRadius,
                   boxShadow: [
                     BoxShadow(
@@ -158,18 +173,18 @@ class _SignInScreenState extends State<SignInScreen> {
                         blurRadius: 8,
                         color: Colors.black.withOpacity(0.3))
                   ]),
-              child: Text(
-                'Sign in'.tr().toUpperCase(),
-                style: const TextStyle(
-                    color: AppColors.pampasColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700),
-              ),
-            ),
-          ),
-        ],
-      )),
-    );
+              child: InkWell(
+                  onTap: () => _onSignIn(isActive),
+                  child: Text(
+                    'Sign in'.tr().toUpperCase(),
+                    style: TextStyle(
+                        color: isActive
+                            ? AppColors.pampasColor
+                            : AppColors.curiousBlueColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ))));
+    });
   }
 
   BorderRadiusGeometry? get borderRadius => BorderRadius.circular(4);

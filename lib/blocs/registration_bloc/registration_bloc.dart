@@ -1,6 +1,4 @@
-import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:login_registration_app/middleware/extensions/string_extension.dart';
 import 'package:login_registration_app/middleware/repositories/api_respository_impl.dart';
 import 'package:uuid/uuid.dart';

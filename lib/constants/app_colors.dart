@@ -9,4 +9,5 @@ class AppColors {
   static const Color tuataraColor = Color.fromRGBO(34, 33, 32, 1); //#222120
   static const Color curiousBlueColor =
       Color.fromRGBO(45, 150, 212, 1); //#2D96D4
+  static const Color keppelColor = Color.fromRGBO(59, 158, 146, 1); //#3B9E92
 }
