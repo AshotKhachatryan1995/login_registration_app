@@ -5,7 +5,9 @@ import 'package:login_registration_app/shared/custom_divider.dart';
 import 'package:login_registration_app/shared/detail_app_bar_widget.dart';
 import 'package:login_registration_app/shared/info_button_row.dart';
 
+import '../shared/custom_button.dart';
 import '../shared/input_form_widget.dart';
+import '../shared/text_field_widget.dart';
 
 class RecoveryPasswordScreen extends StatefulWidget {
   static const String route = '/recoveryPassword';
@@ -62,18 +64,38 @@ class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
                         fontWeight: FontWeight.w400),
                   )),
               const CustomDivider(),
-              Container(
-                height: 48,
-                margin: const EdgeInsets.symmetric(vertical: 32),
-                decoration: BoxDecoration(
-                    color: AppColors.pampasColor,
-                    borderRadius: BorderRadius.circular(4)),
-                child: TextFormField(),
-              ),
+              TextFieldWidget(
+                  controller: TextEditingController(), hintText: 'Username'),
+              const SizedBox(height: 16),
             ],
           ),
-        )
+        ),
+        const SizedBox(height: 16),
+        _renderButtons()
       ],
     );
+  }
+
+  Widget _renderButtons() {
+    return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+      CustomButton(buttonTitle: 'cancel', onTapButton: () {}),
+      const SizedBox(width: 8),
+      CustomButton(
+        buttonTitle: 'recover',
+        onTapButton: () {},
+        titleColor: Colors.white,
+        decoration: BoxDecoration(
+          color: AppColors.curiousBlueColor,
+          borderRadius: BorderRadius.circular(4),
+          boxShadow: [
+            BoxShadow(
+                offset: const Offset(0, 2),
+                blurRadius: 8,
+                color: Colors.black.withOpacity(0.3))
+          ],
+        ),
+      ),
+      const SizedBox(width: 16),
+    ]);
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:login_registration_app/shared/app_localizations/localization.dart';
 
 import '../constants/app_colors.dart';
+import 'custom_button.dart';
 import 'horizontal_padded_widget.dart';
 
 class InfoButtonRow extends StatelessWidget {
@@ -29,22 +30,11 @@ class InfoButtonRow extends StatelessWidget {
             fontSize: 16,
             fontWeight: FontWeight.w400),
       ),
-      InkWell(
-          onTap: onTapButton,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-            decoration: decoration ??
-                BoxDecoration(
-                    color: Colors.white.withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(4)),
-            child: Text(
-              buttonTitle.tr().toUpperCase(),
-              style: const TextStyle(
-                  color: AppColors.curiousBlueColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700),
-            ),
-          ))
+      CustomButton(
+        buttonTitle: buttonTitle,
+        onTapButton: onTapButton,
+        decoration: decoration,
+      )
     ]));
   }
 }
