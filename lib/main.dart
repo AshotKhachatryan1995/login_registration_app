@@ -7,15 +7,23 @@ import 'package:provider/provider.dart';
 import 'blocs/navigation_bloc/navigation_bloc.dart';
 import 'blocs/navigation_bloc/navigation_event.dart';
 import 'blocs/navigation_bloc/navigation_state.dart';
+import 'middleware/models/user.dart';
 import 'middleware/preferances/shared_preferance.dart';
 import 'screens/home_screen.dart';
 import 'shared/app_localizations/app_localizations.dart';
 import 'shared/countries/country_loader.dart';
-import 'shared/loading_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  final appDocumentDirectory = await getApplicationDocumentsDirectory();
+
+  Hive.init(appDocumentDirectory.path);
+  Hive.registerAdapter(UserAdapter());
 
   /// Initialize preferences
   await SharedPrefs().init();
@@ -111,5 +119,7 @@ Widget _mainRoute(NavigationState state) {
     return const HomeScreen();
   }
 
-  return const LoadingWidget();
+  return const Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(child: CircularProgressIndicator()));
 }

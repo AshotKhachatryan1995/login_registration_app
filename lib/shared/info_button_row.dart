@@ -38,7 +38,7 @@ class InfoButtonRow extends StatelessWidget {
                     color: Colors.white.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(4)),
             child: Text(
-              buttonTitle.toUpperCase().tr(),
+              buttonTitle.tr().toUpperCase(),
               style: const TextStyle(
                   color: AppColors.curiousBlueColor,
                   fontSize: 16,

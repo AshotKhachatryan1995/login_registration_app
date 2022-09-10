@@ -1,19 +1,25 @@
 PODS:
+  - country_codes (0.0.1):
+    - Flutter
   - Flutter (1.0.0)
   - shared_preferences_ios (0.0.1):
     - Flutter
 
 DEPENDENCIES:
+  - country_codes (from `.symlinks/plugins/country_codes/ios`)
   - Flutter (from `Flutter`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
 
 EXTERNAL SOURCES:
+  country_codes:
+    :path: ".symlinks/plugins/country_codes/ios"
   Flutter:
     :path: Flutter
   shared_preferences_ios:
     :path: ".symlinks/plugins/shared_preferences_ios/ios"
 
 SPEC CHECKSUMS:
+  country_codes: b0900f46ad686281d5dab438e354e44ad10f5941
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
 
