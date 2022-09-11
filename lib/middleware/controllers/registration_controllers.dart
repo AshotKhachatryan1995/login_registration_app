@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:login_registration_app/middleware/models/country.dart';
+import 'package:login_registration_app/shared/countries/country_loader.dart';
 
 class RegistrationControllers {
   final TextEditingController firstNameController = TextEditingController();
@@ -8,6 +10,8 @@ class RegistrationControllers {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+
+  Country? selectedCountry = CountryLoader.instance.defaultCountry;
 
   bool get areNotEmpty =>
       firstNameController.text.isNotEmpty &&

@@ -6,8 +6,10 @@ import 'package:login_registration_app/shared/app_localizations/localization.dar
 import '../constants/app_colors.dart';
 
 class MainAppBarWidget extends StatefulWidget {
-  const MainAppBarWidget({required this.onLocaleChange, super.key});
+  const MainAppBarWidget(
+      {required this.selectedLocale, required this.onLocaleChange, super.key});
 
+  final String selectedLocale;
   final StringCallback onLocaleChange;
 
   @override
@@ -15,13 +17,12 @@ class MainAppBarWidget extends StatefulWidget {
 }
 
 class _MainAppBarWidgetState extends State<MainAppBarWidget> {
-  List<String> list = LocalizationPreferance.localies;
   late String dropdownValue;
 
   @override
   void initState() {
     super.initState();
-    dropdownValue = list.first;
+    dropdownValue = widget.selectedLocale;
   }
 
   @override
@@ -88,7 +89,8 @@ class _MainAppBarWidgetState extends State<MainAppBarWidget> {
             itemPadding: EdgeInsets.zero,
             barrierColor: Colors.black.withOpacity(0.2),
             icon: const SizedBox(),
-            items: list.map<DropdownMenuItem<String>>((String value) {
+            items: LocalizationPreferance.localies
+                .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Image.asset(

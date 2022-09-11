@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_registration_app/shared/app_localizations/localization.dart';
 
 import '../constants/app_colors.dart';
 import 'horizontal_padded_widget.dart';
@@ -19,7 +20,7 @@ class InputFormWidget extends StatelessWidget {
 
   Widget _renderTitle() {
     return Text(
-      formTitle,
+      formTitle.tr(),
       style: const TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.w700,

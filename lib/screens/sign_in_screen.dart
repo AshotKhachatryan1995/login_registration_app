@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 
 import '../blocs/sign_in_bloc/sign_in_event.dart';
 import '../middleware/controllers/login_controllers.dart';
+import '../middleware/preferances/localization_preferance.dart';
 import '../shared/loading_widget.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -26,6 +27,7 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  late String _selectedLocale;
   late final SignInBloc _signInBloc;
   final LoginControllers _controllers = LoginControllers();
 
@@ -34,6 +36,7 @@ class _SignInScreenState extends State<SignInScreen> {
     super.initState();
 
     _signInBloc = SignInBloc(ApiRepositoryImpl());
+    _selectedLocale = LocalizationPreferance.defaultLocale.languageCode;
   }
 
   @override
@@ -59,10 +62,8 @@ class _SignInScreenState extends State<SignInScreen> {
                         appBar: PreferredSize(
                             preferredSize: const Size(0, 120),
                             child: MainAppBarWidget(
-                                onLocaleChange: (String? val) =>
-                                    Provider.of<LocaleChangeNotifer>(context,
-                                            listen: false)
-                                        .changeLocale(val))),
+                                selectedLocale: _selectedLocale,
+                                onLocaleChange: _onLocaleChange)),
                         body: _renderBody())))));
   }
 
@@ -183,6 +184,15 @@ class _SignInScreenState extends State<SignInScreen> {
                         fontWeight: FontWeight.w700),
                   ))));
     });
+  }
+
+  void _onLocaleChange(String? val) {
+    Provider.of<LocaleChangeNotifer>(context, listen: false).changeLocale(val);
+    if (val != null) {
+      setState(() {
+        _selectedLocale = val;
+      });
+    }
   }
 
   BorderRadiusGeometry? get borderRadius => BorderRadius.circular(4);

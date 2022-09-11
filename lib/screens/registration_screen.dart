@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_registration_app/middleware/controllers/registration_controllers.dart';
+import 'package:login_registration_app/middleware/enums/user_registration_field_error_type.dart';
+import 'package:login_registration_app/middleware/models/country.dart';
 import 'package:login_registration_app/middleware/repositories/api_respository_impl.dart';
+import 'package:login_registration_app/middleware/repositories/validation_repository_impl.dart';
+import 'package:login_registration_app/shared/countries_dropdown.dart';
 import 'package:login_registration_app/shared/input_form_widget.dart';
 import 'package:login_registration_app/shared/text_field_widget.dart';
 import 'package:login_registration_app/shared/unfocus_scaffold.dart';
@@ -30,7 +34,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   void initState() {
     super.initState();
 
-    _registrationBloc = RegistrationBloc(ApiRepositoryImpl());
+    _registrationBloc =
+        RegistrationBloc(ApiRepositoryImpl(), ValidationRepositoryImpl());
   }
 
   @override
@@ -66,13 +71,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   controller: _controllers.lastNameController,
                   hintText: 'Last Name'),
               TextFieldWidget(
-                  controller: _controllers.emailController,
-                  hintText: 'Email',
-                  keyboardType: TextInputType.emailAddress),
+                controller: _controllers.emailController,
+                hintText: 'Email',
+                keyboardType: TextInputType.emailAddress,
+              ),
               TextFieldWidget(
                   controller: _controllers.phoneController,
                   hintText: 'Phone Number',
-                  keyboardType: TextInputType.number),
+                  keyboardType: TextInputType.number,
+                  prefixIcon: CountriesDropDown(
+                      onCountryChange: (Country? selectedCountry) =>
+                          _controllers.selectedCountry = selectedCountry)),
               TextFieldWidget(
                   controller: _controllers.passwordController,
                   hintText: 'Password',
@@ -89,7 +98,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   Widget _renderButtons() {
     return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-      CustomButton(buttonTitle: 'cancel', onTapButton: () {}),
+      CustomButton(
+          buttonTitle: 'cancel', onTapButton: () => Navigator.pop(context)),
       const SizedBox(width: 8),
       CustomButton(
         buttonTitle: 'create',
@@ -112,34 +122,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 }
 
 extension _RegistrationScreenStateAddition on _RegistrationScreenState {
-  void _onSignUp() {
-    if (!_controllers.areNotEmpty) {
-      showDialog(
-          context: context,
-          barrierDismissible: true,
-          builder: (context) => const AlertDialog(
-              title: Text('Please fill all fields',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20, color: Colors.red))));
-      return;
-    }
-
-    _registrationBloc.add(CreateUserEvent(controllers: _controllers));
-  }
+  void _onSignUp() =>
+      _registrationBloc.add(CreateUserEvent(controllers: _controllers));
 
   void _listener(context, state) {
     if (state is UserCreatedSuccessfullyState) {
       Navigator.pushNamed(context, '/verifyAccount');
     }
 
-    if (state is UserAlreadyExists) {
+    if (state is UserFieldNotValidState) {
       showDialog(
           context: context,
           barrierDismissible: true,
-          builder: (context) => const AlertDialog(
-              title: Text('This username already exists',
+          builder: (context) => AlertDialog(
+              title: Text(state.errorType.dialogMessage(),
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20, color: Colors.red))));
+                  style: const TextStyle(fontSize: 20, color: Colors.red))));
     }
   }
 }
