@@ -7,12 +7,6 @@ abstract class NavigationEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class InitialEvent extends NavigationEvent {
-  @override
-  List<Object?> get props => [];
-}
+class InitialEvent extends NavigationEvent {}
 
-class CheckRegisteredUserEvent extends NavigationEvent {
-  @override
-  List<Object?> get props => [];
-}
+class CheckRegisteredUserEvent extends NavigationEvent {}

@@ -1,27 +1,37 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:login_registration_app/middleware/models/user.dart';
 import 'package:login_registration_app/middleware/preferances/shared_preferance.dart';
+import 'package:login_registration_app/middleware/repositories/api_respository_impl.dart';
 
 import 'navigation_event.dart';
 import 'navigation_state.dart';
 
 class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
-  NavigationBloc() : super(InitialState()) {
+  NavigationBloc(this._apiRepositoryImpl) : super(InitialState()) {
     on<CheckRegisteredUserEvent>(_onCheckRegisteredUserEvent);
   }
 
+  final ApiRepositoryImpl _apiRepositoryImpl;
   final SharedPrefs _sharedPrefs = SharedPrefs();
 
   Future<void> _onCheckRegisteredUserEvent(
       CheckRegisteredUserEvent event, Emitter<NavigationState> emit) async {
     emit(LoadingState());
+    try {
+      final userId = _sharedPrefs.valueByKey('userId');
 
-    final token = _sharedPrefs.valueByKey('token');
+      if (userId != null) {
+        final result = await _apiRepositoryImpl.getUserByID(userId: userId);
 
-    if (token != null) {
-      emit(AuthenticatedState());
-      return;
+        if (result is User) {
+          emit(AuthenticatedState(user: result));
+          return;
+        }
+      }
+    } catch (e) {
+      emit(UnAuthenticatedState());
+
+      throw Exception(e.toString());
     }
-
-    emit(UnAuthenticatedState());
   }
 }

@@ -78,9 +78,9 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
         return;
       }
 
-      if (result is String) {
-        await _sharedPrefs.setString('userId', user.id);
-        emit(UserCreatedSuccessfullyState());
+      if (result is User) {
+        await _sharedPrefs.setString('userId', result.id);
+        emit(UserCreatedSuccessfullyState(user: result));
       }
     } catch (e) {
       throw Exception(e.toString());

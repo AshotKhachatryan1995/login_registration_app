@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_registration_app/middleware/repositories/api_respository_impl.dart';
 
+import '../../middleware/models/user.dart';
 import '../../middleware/preferances/shared_preferance.dart';
 import 'sign_in_event.dart';
 import 'sign_in_state.dart';
@@ -38,10 +39,10 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         return;
       }
 
-      if (result is String) {
-        await _sharedPrefs.setString('userId', result);
+      if (result is User) {
+        await _sharedPrefs.setString('userId', result.id);
 
-        emit(UserSignInSuccessfullyState());
+        emit(UserSignInSuccessfullyState(user: result));
         return;
       }
     } catch (e) {

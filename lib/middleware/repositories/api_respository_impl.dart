@@ -10,19 +10,16 @@ class ApiRepositoryImpl implements ApiRepository {
   Future<dynamic> createUser({required User user}) async {
     final box = await Hive.openBox<User>('users_db');
 
-    final userEmail =
-        box.values.firstWhereOrNull((element) => element.email == user.email);
+    final newUser = box.values.firstWhereOrNull((element) =>
+        element.email == user.email || element.phone == user.phone);
 
-    final userPhone =
-        box.values.firstWhereOrNull((element) => element.phone == user.phone);
-
-    if (userPhone != null || userEmail != null) {
+    if (newUser != null) {
       return;
     }
 
     await box.put(user.id, user);
 
-    return user.id;
+    return user;
   }
 
   @override
@@ -41,7 +38,46 @@ class ApiRepositoryImpl implements ApiRepository {
     final user = users.first;
 
     if (user.password == password.generateMd5()) {
-      return user.id;
+      return user;
     }
+  }
+
+  @override
+  Future<dynamic> verifyCode({required String code}) async {
+    return code == '00000';
+  }
+
+  @override
+  Future<dynamic> setNewPassword(
+      {required String userName, required String password}) async {
+    final box = await Hive.openBox<User>('users_db');
+
+    final existsUser = box.values.firstWhereOrNull(
+        (element) => element.email == userName || element.phone == userName);
+
+    if (existsUser == null) {
+      return;
+    }
+
+    existsUser.password = password;
+
+    await box.put(existsUser.id, existsUser);
+
+    return existsUser;
+  }
+
+  @override
+  Future<dynamic> getUserByID({required String userId}) async {
+    final box = await Hive.openBox<User>('users_db');
+
+    final users = box.values.where((user) => user.id == userId).toList();
+
+    if (users.isEmpty) {
+      return;
+    }
+
+    final user = users.first;
+
+    return user;
   }
 }

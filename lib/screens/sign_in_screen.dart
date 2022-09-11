@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 
 import '../blocs/sign_in_bloc/sign_in_event.dart';
 import '../middleware/controllers/login_controllers.dart';
+import '../middleware/notifiers/user_notifier.dart';
 import '../middleware/preferances/localization_preferance.dart';
 import '../shared/loading_widget.dart';
 
@@ -212,7 +213,10 @@ extension _SignInScreenStateAddition on _SignInScreenState {
 
   void _listener(context, state) {
     if (state is UserSignInSuccessfullyState) {
-      Navigator.pushNamed(context, '/home');
+      Provider.of<UserNotifier>(context, listen: false)
+          .setNewUser(user: state.user);
+
+      Navigator.pushNamed(context, '/welcome');
     }
   }
 }

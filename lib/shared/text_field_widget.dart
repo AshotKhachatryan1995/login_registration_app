@@ -7,6 +7,7 @@ class TextFieldWidget extends StatelessWidget {
       required this.hintText,
       this.obscureText = false,
       this.textAlign = TextAlign.left,
+      this.readOnly = false,
       this.prefixIcon,
       this.keyboardType,
       this.onChanged,
@@ -17,6 +18,7 @@ class TextFieldWidget extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final TextAlign textAlign;
+  final bool readOnly;
   final Widget? prefixIcon;
   final TextInputType? keyboardType;
   final StringCallback? onChanged;
@@ -30,6 +32,7 @@ class TextFieldWidget extends StatelessWidget {
           cursorColor: AppColors.keppelColor,
           textAlign: textAlign,
           keyboardType: keyboardType,
+          readOnly: readOnly,
           decoration: InputDecoration(
               prefixIcon: prefixIcon,
               contentPadding: EdgeInsets.zero,

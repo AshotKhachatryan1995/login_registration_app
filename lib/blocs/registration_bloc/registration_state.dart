@@ -20,7 +20,13 @@ class CreateNewUserState extends RegistrationState {
   List<Object> get props => [user];
 }
 
-class UserCreatedSuccessfullyState extends RegistrationState {}
+class UserCreatedSuccessfullyState extends RegistrationState {
+  UserCreatedSuccessfullyState({required this.user});
+  final User user;
+
+  @override
+  List<Object> get props => [user];
+}
 
 class UserCreateInvalidState extends RegistrationState {}
 

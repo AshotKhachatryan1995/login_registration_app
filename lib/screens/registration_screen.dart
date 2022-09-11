@@ -3,12 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_registration_app/middleware/controllers/registration_controllers.dart';
 import 'package:login_registration_app/middleware/enums/user_registration_field_error_type.dart';
 import 'package:login_registration_app/middleware/models/country.dart';
+import 'package:login_registration_app/middleware/notifiers/user_notifier.dart';
 import 'package:login_registration_app/middleware/repositories/api_respository_impl.dart';
 import 'package:login_registration_app/middleware/repositories/validation_repository_impl.dart';
 import 'package:login_registration_app/shared/countries_dropdown.dart';
 import 'package:login_registration_app/shared/input_form_widget.dart';
 import 'package:login_registration_app/shared/text_field_widget.dart';
 import 'package:login_registration_app/shared/unfocus_scaffold.dart';
+import 'package:provider/provider.dart';
 
 import '../blocs/registration_bloc/registration_bloc.dart';
 import '../blocs/registration_bloc/registration_event.dart';
@@ -127,7 +129,10 @@ extension _RegistrationScreenStateAddition on _RegistrationScreenState {
 
   void _listener(context, state) {
     if (state is UserCreatedSuccessfullyState) {
-      Navigator.pushNamed(context, '/verifyAccount');
+      Provider.of<UserNotifier>(context, listen: false)
+          .setNewUser(user: state.user);
+
+      Navigator.pushNamed(context, '/welcome');
     }
 
     if (state is UserFieldNotValidState) {

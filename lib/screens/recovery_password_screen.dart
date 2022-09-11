@@ -19,6 +19,8 @@ class RecoveryPasswordScreen extends StatefulWidget {
 }
 
 class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
+  final TextEditingController _userNameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return UnfocusScaffold(body: _renderBody());
@@ -61,7 +63,7 @@ class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
                   )),
               const CustomDivider(),
               TextFieldWidget(
-                  controller: TextEditingController(), hintText: 'Username'),
+                  controller: _userNameController, hintText: 'Username'),
               const SizedBox(height: 16),
             ],
           ),
@@ -74,11 +76,12 @@ class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
 
   Widget _renderButtons() {
     return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-      CustomButton(buttonTitle: 'cancel', onTapButton: () {}),
+      CustomButton(
+          buttonTitle: 'cancel', onTapButton: () => Navigator.pop(context)),
       const SizedBox(width: 8),
       CustomButton(
         buttonTitle: 'recover',
-        onTapButton: () {},
+        onTapButton: _onRecover,
         titleColor: Colors.white,
         decoration: BoxDecoration(
           color: AppColors.curiousBlueColor,
@@ -93,5 +96,16 @@ class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
       ),
       const SizedBox(width: 16),
     ]);
+  }
+}
+
+extension _RecoveryPasswordScreenStateAddition on _RecoveryPasswordScreenState {
+  void _onRecover() {
+    if (_userNameController.text.isEmpty) {
+      return;
+    }
+
+    Navigator.pushNamed(context, '/verifyAccount',
+        arguments: _userNameController.text);
   }
 }
