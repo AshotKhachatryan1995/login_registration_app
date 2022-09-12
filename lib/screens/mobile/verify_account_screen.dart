@@ -13,24 +13,22 @@ import 'package:login_registration_app/shared/text_field_widget.dart';
 import 'package:login_registration_app/shared/unfocus_scaffold.dart';
 import 'package:provider/provider.dart';
 
-import '../blocs/verify_account_bloc/verify_account_event.dart';
-import '../constants/app_colors.dart';
-import '../middleware/controllers/reset_passwords_controllers.dart';
-import '../middleware/notifiers/user_notifier.dart';
-import '../shared/loading_widget.dart';
+import '../../blocs/verify_account_bloc/verify_account_event.dart';
+import '../../constants/app_colors.dart';
+import '../../middleware/controllers/reset_passwords_controllers.dart';
+import '../../middleware/notifiers/user_notifier.dart';
+import '../../shared/loading_widget.dart';
 
 class VerifyAccountScreen extends StatefulWidget {
-  static const String route = '/verifyAccount';
-
   const VerifyAccountScreen({required this.userName, super.key});
 
   final String userName;
 
   @override
-  State<VerifyAccountScreen> createState() => _VerifyAccountScreenState();
+  State<VerifyAccountScreen> createState() => VerifyAccountScreenState();
 }
 
-class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
+class VerifyAccountScreenState<T extends VerifyAccountScreen> extends State<T> {
   late final VerifyAccountBloc _verifyAccountBloc;
   final ResetPasswordsControllers _resetPasswordsControllers =
       ResetPasswordsControllers();
@@ -67,14 +65,15 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
             listener: _blocListener,
             builder: (context, state) => LoadingWidget(
                 isLoading: state is LoadingState,
-                child: UnfocusScaffold(body: _renderBody()))));
+                child: UnfocusScaffold(body: renderBody()))));
   }
 
-  Widget _renderBody() {
+  Widget renderBody({MainAxisAlignment? mainAxisAlignment}) {
     return Padding(
         padding: const EdgeInsets.only(top: 16),
         child: InputFormWidget(
             formTitle: 'Account verification',
+            mainAxisAlignment: mainAxisAlignment,
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               const SizedBox(height: 32),
@@ -146,7 +145,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
   }
 }
 
-extension _VerifyAccountScreenStateAddition on _VerifyAccountScreenState {
+extension VerifyAccountScreenStateAddition on VerifyAccountScreenState {
   void _listener() {
     final code = _codeVerificationController.text;
 
