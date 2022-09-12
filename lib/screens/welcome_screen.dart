@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_registration_app/constants/app_styles.dart';
 import 'package:login_registration_app/shared/unfocus_scaffold.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +30,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       body: Align(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-        const Text('Welcome', style: TextStyle(fontSize: 30)),
+        Text('Welcome', style: getStyle(fontSize: 30)),
         const SizedBox(height: 20),
         Text(_userNotifier.user?.firstName ?? ''),
         Text(_userNotifier.user?.lastName ?? '')

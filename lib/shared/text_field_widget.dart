@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login_registration_app/constants/app_colors.dart';
+import 'package:login_registration_app/constants/app_styles.dart';
 
 class TextFieldWidget extends StatelessWidget {
   const TextFieldWidget(
@@ -42,7 +43,7 @@ class TextFieldWidget extends StatelessWidget {
                   child: Text(hintText)),
               disabledBorder: InputBorder.none,
               border: InputBorder.none,
-              hintStyle: const TextStyle(
+              hintStyle: getStyle(
                 color: AppColors.tuataraColor,
                 fontSize: 14,
                 fontWeight: FontWeight.w400,

@@ -106,12 +106,14 @@ Widget _materialApp() {
                             onGenerateRoute: (settings) {
                               if (settings.name == '/') {
                                 return MaterialPageRoute(
+                                    settings: settings,
                                     builder: (context) =>
                                         _mainRoute(context, state));
                               }
 
                               if (settings.name == SignInScreenBuilder.route) {
                                 return MaterialPageRoute(
+                                    settings: settings,
                                     builder: (context) =>
                                         const SignInScreenBuilder());
                               }
@@ -119,6 +121,7 @@ Widget _materialApp() {
                               if (settings.name ==
                                   RecoveryPasswordScreenBuilder.route) {
                                 return MaterialPageRoute(
+                                    settings: settings,
                                     builder: (context) =>
                                         const RecoveryPasswordScreenBuilder());
                               }
@@ -126,6 +129,7 @@ Widget _materialApp() {
                               if (settings.name ==
                                   RegistrationScreenBuilder.route) {
                                 return MaterialPageRoute(
+                                    settings: settings,
                                     builder: (context) =>
                                         const RegistrationScreenBuilder());
                               }
@@ -135,12 +139,14 @@ Widget _materialApp() {
                                 final userName = settings.arguments as String;
 
                                 return MaterialPageRoute(
+                                    settings: settings,
                                     builder: (context) =>
                                         VerifyAccountScreenBuilder(
                                             userName: userName));
                               }
                               if (settings.name == WelcomeScreen.route) {
                                 return MaterialPageRoute(
+                                    settings: settings,
                                     builder: (context) =>
                                         const WelcomeScreen());
                               }

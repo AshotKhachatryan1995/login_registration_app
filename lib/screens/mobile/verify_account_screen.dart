@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_registration_app/blocs/verify_account_bloc/verify_account_bloc.dart';
 import 'package:login_registration_app/blocs/verify_account_bloc/verify_account_state.dart';
+import 'package:login_registration_app/constants/app_styles.dart';
 import 'package:login_registration_app/middleware/enums/user_registration_field_error_type.dart';
 import 'package:login_registration_app/middleware/repositories/api_respository_impl.dart';
 import 'package:login_registration_app/middleware/repositories/validation_repository_impl.dart';
@@ -77,12 +78,9 @@ class VerifyAccountScreenState<T extends VerifyAccountScreen> extends State<T> {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               const SizedBox(height: 32),
-              const Text(
+              Text(
                 'A verification code has been sent to your email account to complete your registration process. Please check your email.',
-                style: TextStyle(
-                    color: AppColors.tuataraColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400),
+                style: insuranceDefaultStyle(fontWeight: FontWeight.w400),
               ),
               const SizedBox(height: 14),
               const CustomDivider(),
@@ -113,11 +111,11 @@ class VerifyAccountScreenState<T extends VerifyAccountScreen> extends State<T> {
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
-                    const Align(
+                    Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
                           'Change your password',
-                          style: TextStyle(
+                          style: getStyle(
                               fontSize: 16, fontWeight: FontWeight.w600),
                         )),
                     const SizedBox(height: 14),
@@ -161,10 +159,9 @@ extension VerifyAccountScreenStateAddition on VerifyAccountScreenState {
       showDialog(
           context: context,
           barrierDismissible: true,
-          builder: (context) => const AlertDialog(
+          builder: (context) => AlertDialog(
               title: Text('Verification Code Invalid',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20, color: Colors.red))));
+                  textAlign: TextAlign.center, style: errorStyle)));
     }
 
     if (state is SetPasswordInvalidState) {
@@ -173,18 +170,16 @@ extension VerifyAccountScreenStateAddition on VerifyAccountScreenState {
           barrierDismissible: true,
           builder: (context) => AlertDialog(
               title: Text(state.errorType.dialogMessage(),
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 20, color: Colors.red))));
+                  textAlign: TextAlign.center, style: errorStyle)));
     }
 
     if (state is PasswordUpdateInvalidState) {
       showDialog(
           context: context,
           barrierDismissible: true,
-          builder: (context) => const AlertDialog(
+          builder: (context) => AlertDialog(
               title: Text('Please try again',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20, color: Colors.red))));
+                  textAlign: TextAlign.center, style: errorStyle)));
     }
 
     if (state is PasswordSuccessfullyUpdatedState) {

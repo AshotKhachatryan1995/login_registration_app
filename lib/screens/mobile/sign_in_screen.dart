@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_registration_app/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:login_registration_app/blocs/sign_in_bloc/sign_in_state.dart';
 import 'package:login_registration_app/constants/app_colors.dart';
+import 'package:login_registration_app/constants/app_styles.dart';
 import 'package:login_registration_app/middleware/mixins/change_locale_mixin.dart';
 import 'package:login_registration_app/middleware/repositories/api_respository_impl.dart';
 import 'package:login_registration_app/shared/app_localizations/localization.dart';
@@ -112,10 +113,8 @@ class SignInScreenState<T extends SignInScreen> extends State<T>
                 onTap: () => Navigator.pushNamed(context, '/recoveryPassword'),
                 child: Text(
                   'Forgot password?'.tr(),
-                  style: const TextStyle(
+                  style: insuranceDefaultStyle(
                       decoration: TextDecoration.underline,
-                      color: AppColors.tuataraColor,
-                      fontSize: 16,
                       fontWeight: FontWeight.w400),
                 )),
             _renderSignInButton()
@@ -152,7 +151,7 @@ class SignInScreenState<T extends SignInScreen> extends State<T>
                   onTap: () => _onSignIn(isActive),
                   child: Text(
                     'Sign in'.tr().toUpperCase(),
-                    style: TextStyle(
+                    style: getStyle(
                         color: isActive
                             ? AppColors.pampasColor
                             : AppColors.curiousBlueColor,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_registration_app/constants/app_styles.dart';
 import 'package:login_registration_app/shared/app_localizations/localization.dart';
 
 import '../constants/app_colors.dart';
@@ -26,7 +27,7 @@ class InputFormWidget extends StatelessWidget {
   Widget _renderTitle() {
     return Text(
       formTitle.tr(),
-      style: const TextStyle(
+      style: getStyle(
           fontSize: 24,
           fontWeight: FontWeight.w700,
           color: AppColors.tuataraColor),

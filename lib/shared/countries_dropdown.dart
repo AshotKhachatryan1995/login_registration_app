@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:login_registration_app/constants/app_styles.dart';
 
 import '../middleware/models/country.dart';
 import 'countries/country_loader.dart';
@@ -50,11 +51,11 @@ class _CountriesDropDownState extends State<CountriesDropDown> {
                 child: Row(children: [
                   Text(
                     value.flagEmoji(),
-                    style: const TextStyle(fontSize: 30),
+                    style: getStyle(fontSize: 30),
                   ),
                   Text(
                     ' +${value.e164CC}',
-                    style: const TextStyle(fontSize: 12),
+                    style: getStyle(fontSize: 12),
                   ),
                 ]));
           }).toList()),

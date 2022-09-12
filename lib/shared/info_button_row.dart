@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_registration_app/constants/app_styles.dart';
 import 'package:login_registration_app/shared/app_localizations/localization.dart';
 
 import '../constants/app_colors.dart';
@@ -25,7 +26,7 @@ class InfoButtonRow extends StatelessWidget {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       Text(
         message.tr(),
-        style: const TextStyle(
+        style: getStyle(
             color: AppColors.tuataraColor,
             fontSize: 16,
             fontWeight: FontWeight.w400),

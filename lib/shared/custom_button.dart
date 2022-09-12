@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_registration_app/constants/app_styles.dart';
 import 'package:login_registration_app/shared/app_localizations/localization.dart';
 
 import '../constants/app_colors.dart';
@@ -28,7 +29,7 @@ class CustomButton extends StatelessWidget {
                   borderRadius: BorderRadius.circular(4)),
           child: Text(
             buttonTitle.tr().toUpperCase(),
-            style: TextStyle(
+            style: getStyle(
                 color: titleColor ?? AppColors.curiousBlueColor,
                 fontSize: 16,
                 fontWeight: FontWeight.w700),

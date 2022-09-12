@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:login_registration_app/constants/app_styles.dart';
 import 'package:login_registration_app/middleware/controllers/registration_controllers.dart';
 import 'package:login_registration_app/middleware/enums/user_registration_field_error_type.dart';
 import 'package:login_registration_app/middleware/models/country.dart';
@@ -143,8 +144,7 @@ extension RegistrationScreenStateAddition on RegistrationScreenState {
           barrierDismissible: true,
           builder: (context) => AlertDialog(
               title: Text(state.errorType.dialogMessage(),
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 20, color: Colors.red))));
+                  textAlign: TextAlign.center, style: errorStyle)));
     }
   }
 }

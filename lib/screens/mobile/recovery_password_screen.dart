@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login_registration_app/constants/app_colors.dart';
+import 'package:login_registration_app/constants/app_styles.dart';
 import 'package:login_registration_app/shared/app_localizations/localization.dart';
 import 'package:login_registration_app/shared/custom_divider.dart';
 import 'package:login_registration_app/shared/info_button_row.dart';
@@ -52,10 +53,7 @@ class RecoveryPasswordScreenState<T extends RecoveryPasswordScreen>
               child: Text(
                 'Please, enter your username, phone number, email or ID number to search for your account'
                     .tr(),
-                style: const TextStyle(
-                    color: AppColors.tuataraColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400),
+                style: insuranceDefaultStyle(fontWeight: FontWeight.w400),
               )),
           const CustomDivider(),
           TextFieldWidget(

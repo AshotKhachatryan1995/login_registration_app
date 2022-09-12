@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:login_registration_app/constants/app_styles.dart';
 import 'package:login_registration_app/middleware/preferances/localization_preferance.dart';
 import 'package:login_registration_app/shared/app_localizations/localization.dart';
 
@@ -68,7 +69,7 @@ class _MainAppBarWidgetState extends State<MainAppBarWidget> {
             padding: const EdgeInsets.fromLTRB(10, 15, 15, 15),
             child: Text(
               'Go to the ID Website'.tr(),
-              style: const TextStyle(color: AppColors.tuataraColor),
+              style: getStyle(color: AppColors.tuataraColor),
             ))
       ]),
     );
