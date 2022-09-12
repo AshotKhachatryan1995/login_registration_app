@@ -1,16 +1,44 @@
 # login_registration_app
 
-A new Flutter project.
+This project created in flutter with BLoC state managment. This project supports  Android, IOS and Web, clone the branches mentioned below:
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+https://github.com/AshotKhachatryan1995/login_registration_app/main (stable channel)
 
-A few resources to get you started if this is your first Flutter project:
+Getting Started 
+---
+##In this project shows user Sign In/Sign Up/Reset password flow for mobile and web
+##All user information stored in Hive.
+##Separate design for mobile and for web
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+How to Use Step 1:
+---
+Download or clone this repo by using the link below:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+https://github.com/AshotKhachatryan1995/login_registration_app.git
+
+Go to project root and execute the following command in console to get the required dependencies:
+
+How to Use Step 2:
+---
+flutter pub get
+
+This project uses inject library that works with code generation, execute the following command to generate files:
+
+How to Use Step 3:
+---
+flutter packages pub run build_runner build --delete-conflicting-outputs or watch command in order to keep the source code synced automatically:
+
+flutter packages pub run build_runner watch Hide Generated Files In-order to hide generated files, navigate to Android Studio -> Preferences -> Editor -> File Types and paste the below lines under ignore files and folders section:
+
+*.g.dart; In Visual Studio Code, navigate to Preferences -> Settings and search for Files:Exclude. Add the following patterns:
+
+**/*.g.dart
+
+Flutter 3.3.1(channel stable)
+
+Dart 2.18.0
+
+Conclusion 
+---
+I will be happy to answer any questions that you may have on this approach, for any collaboration feel free to write me. (Ashot199514@gmail.com) 🙂
