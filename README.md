@@ -7,9 +7,9 @@ https://github.com/AshotKhachatryan1995/login_registration_app/main (stable chan
 
 Getting Started 
 ---
-##In this project shows user Sign In/Sign Up/Reset password flow for mobile and web
-##All user information stored in Hive.
-##Separate design for mobile and for web
+<li> In this project shows user Sign In/Sign Up/Reset password flow for mobile and web
+<li> All user information stored in Hive.
+<li> Separate design for mobile and for web
 
 How to Use Step 1:
 ---
