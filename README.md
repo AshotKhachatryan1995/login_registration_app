@@ -1,4 +1,4 @@
-# login_registration_app
+# login/registration app
 
 This project created in flutter with BLoC state managment. This project supports  Android, IOS and Web, clone the branches mentioned below:
 
