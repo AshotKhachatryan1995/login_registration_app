@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:login_registration_app/middleware/mixins/change_locale_mixin.dart';
 import 'package:login_registration_app/screens/mobile/recovery_password_screen.dart';
 import 'package:login_registration_app/shared/company_info_widget.dart';
 import 'package:login_registration_app/shared/main_app_bar_widget.dart';
-import 'package:provider/provider.dart';
-
-import '../../middleware/notifiers/locale_change_notifier.dart';
-import '../../middleware/preferances/localization_preferance.dart';
 import '../../shared/unfocus_scaffold.dart';
 
 class RecoveryPasswordScreenWeb extends RecoveryPasswordScreen {
@@ -17,24 +14,16 @@ class RecoveryPasswordScreenWeb extends RecoveryPasswordScreen {
 }
 
 class RecoveryPasswordScreenWebState
-    extends RecoveryPasswordScreenState<RecoveryPasswordScreen> {
-  late String _selectedLocale;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _selectedLocale = LocalizationPreferance.defaultLocale.languageCode;
-  }
-
+    extends RecoveryPasswordScreenState<RecoveryPasswordScreen>
+    with ChangeLocaleMixin {
   @override
   Widget build(BuildContext context) {
     return UnfocusScaffold(
       body: renderBody(),
       appBar: MainAppBarWidget(
           isWeb: true,
-          selectedLocale: _selectedLocale,
-          onLocaleChange: _onLocaleChange),
+          selectedLocale: selectedLocale,
+          onLocaleChange: onLocaleChange),
     );
   }
 
@@ -68,14 +57,5 @@ class RecoveryPasswordScreenWebState
                         ]))))
       ],
     );
-  }
-
-  void _onLocaleChange(String? val) {
-    Provider.of<LocaleChangeNotifer>(context, listen: false).changeLocale(val);
-    if (val != null) {
-      setState(() {
-        _selectedLocale = val;
-      });
-    }
   }
 }

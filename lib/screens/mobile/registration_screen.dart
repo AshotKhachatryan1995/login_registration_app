@@ -12,23 +12,21 @@ import 'package:login_registration_app/shared/text_field_widget.dart';
 import 'package:login_registration_app/shared/unfocus_scaffold.dart';
 import 'package:provider/provider.dart';
 
-import '../blocs/registration_bloc/registration_bloc.dart';
-import '../blocs/registration_bloc/registration_event.dart';
-import '../blocs/registration_bloc/registration_state.dart';
-import '../constants/app_colors.dart';
-import '../shared/custom_button.dart';
-import '../shared/loading_widget.dart';
+import '../../blocs/registration_bloc/registration_bloc.dart';
+import '../../blocs/registration_bloc/registration_event.dart';
+import '../../blocs/registration_bloc/registration_state.dart';
+import '../../constants/app_colors.dart';
+import '../../shared/custom_button.dart';
+import '../../shared/loading_widget.dart';
 
 class RegistrationScreen extends StatefulWidget {
-  static const String route = '/registration';
-
   const RegistrationScreen({super.key});
 
   @override
-  State<RegistrationScreen> createState() => _RegistrationScreenState();
+  State<RegistrationScreen> createState() => RegistrationScreenState();
 }
 
-class _RegistrationScreenState extends State<RegistrationScreen> {
+class RegistrationScreenState<T extends RegistrationScreen> extends State<T> {
   late final RegistrationBloc _registrationBloc;
   final RegistrationControllers _controllers = RegistrationControllers();
 
@@ -55,15 +53,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         child: BlocConsumer<RegistrationBloc, RegistrationState>(
             listener: _listener,
             builder: (context, state) => LoadingWidget(
-                isLoading: state is LoadingState,
-                child: UnfocusScaffold(body: _renderBody()))));
+                isLoading: state is LoadingState, child: render())));
   }
 
-  Widget _renderBody() {
+  Widget render() {
+    return UnfocusScaffold(body: renderBody());
+  }
+
+  Widget renderBody({MainAxisAlignment? mainAxisAlignment}) {
     return SingleChildScrollView(
         child: Column(children: [
       InputFormWidget(
           formTitle: 'Create a new account',
+          mainAxisAlignment: mainAxisAlignment,
           child: Column(
             children: [
               TextFieldWidget(
@@ -123,7 +125,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 }
 
-extension _RegistrationScreenStateAddition on _RegistrationScreenState {
+extension RegistrationScreenStateAddition on RegistrationScreenState {
   void _onSignUp() =>
       _registrationBloc.add(CreateUserEvent(controllers: _controllers));
 

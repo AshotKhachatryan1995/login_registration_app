@@ -4,23 +4,20 @@ import 'package:login_registration_app/shared/company_info_widget.dart';
 import 'package:login_registration_app/shared/main_app_bar_widget.dart';
 
 import '../../shared/unfocus_scaffold.dart';
-import '../mobile/verify_account_screen.dart';
+import '../mobile/registration_screen.dart';
 
-class VerifyAccountScreenWeb extends VerifyAccountScreen {
-  const VerifyAccountScreenWeb({required this.username, super.key})
-      : super(userName: username);
-
-  final String username;
+class RegistrationScreenWeb extends RegistrationScreen {
+  const RegistrationScreenWeb({super.key});
 
   @override
-  VerifyAccountScreenWebState createState() => VerifyAccountScreenWebState();
+  RegistrationScreenWebState createState() => RegistrationScreenWebState();
 }
 
-class VerifyAccountScreenWebState
-    extends VerifyAccountScreenState<VerifyAccountScreenWeb>
+class RegistrationScreenWebState
+    extends RegistrationScreenState<RegistrationScreenWeb>
     with ChangeLocaleMixin {
   @override
-  Widget build(BuildContext context) {
+  Widget render() {
     return UnfocusScaffold(
       body: renderBody(),
       appBar: MainAppBarWidget(

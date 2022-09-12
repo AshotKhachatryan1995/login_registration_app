@@ -3,10 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_registration_app/middleware/notifiers/locale_change_notifier.dart';
 import 'package:login_registration_app/middleware/repositories/api_respository_impl.dart';
 import 'package:login_registration_app/screens/builders/recovery_password_screen_builder.dart';
+import 'package:login_registration_app/screens/builders/registration_screen_builder.dart';
 import 'package:login_registration_app/screens/builders/verify_account_screen_buider.dart';
-import 'package:login_registration_app/screens/registration_screen.dart';
 import 'package:login_registration_app/screens/builders/sign_in_screen_builder.dart';
-import 'package:login_registration_app/screens/mobile/verify_account_screen.dart';
 import 'package:login_registration_app/screens/welcome_screen.dart';
 import 'package:provider/provider.dart';
 import 'blocs/navigation_bloc/navigation_bloc.dart';
@@ -124,10 +123,11 @@ Widget _materialApp() {
                                         const RecoveryPasswordScreenBuilder());
                               }
 
-                              if (settings.name == RegistrationScreen.route) {
+                              if (settings.name ==
+                                  RegistrationScreenBuilder.route) {
                                 return MaterialPageRoute(
                                     builder: (context) =>
-                                        const RegistrationScreen());
+                                        const RegistrationScreenBuilder());
                               }
 
                               if (settings.name ==
@@ -153,7 +153,7 @@ Widget _materialApp() {
 
 Widget _mainRoute(BuildContext context, NavigationState state) {
   if (state is UnAuthenticatedState) {
-    return VerifyAccountScreenBuilder(userName: 'userName');
+    return const SignInScreenBuilder();
   }
 
   if (state is AuthenticatedState) {

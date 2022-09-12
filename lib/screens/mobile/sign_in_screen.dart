@@ -3,20 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_registration_app/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:login_registration_app/blocs/sign_in_bloc/sign_in_state.dart';
 import 'package:login_registration_app/constants/app_colors.dart';
-import 'package:login_registration_app/middleware/notifiers/locale_change_notifier.dart';
+import 'package:login_registration_app/middleware/mixins/change_locale_mixin.dart';
 import 'package:login_registration_app/middleware/repositories/api_respository_impl.dart';
 import 'package:login_registration_app/shared/app_localizations/localization.dart';
 import 'package:login_registration_app/shared/company_info_widget.dart';
 import 'package:login_registration_app/shared/info_button_row.dart';
 import 'package:login_registration_app/shared/main_app_bar_widget.dart';
-import 'package:login_registration_app/shared/horizontal_padded_widget.dart';
 import 'package:login_registration_app/shared/text_field_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../blocs/sign_in_bloc/sign_in_event.dart';
 import '../../middleware/controllers/login_controllers.dart';
 import '../../middleware/notifiers/user_notifier.dart';
-import '../../middleware/preferances/localization_preferance.dart';
 import '../../shared/input_form_widget.dart';
 import '../../shared/loading_widget.dart';
 
@@ -27,8 +25,8 @@ class SignInScreen extends StatefulWidget {
   State<StatefulWidget> createState() => SignInScreenState();
 }
 
-class SignInScreenState<T extends SignInScreen> extends State<T> {
-  late String _selectedLocale;
+class SignInScreenState<T extends SignInScreen> extends State<T>
+    with ChangeLocaleMixin {
   late final SignInBloc _signInBloc;
   final LoginControllers _controllers = LoginControllers();
 
@@ -37,7 +35,6 @@ class SignInScreenState<T extends SignInScreen> extends State<T> {
     super.initState();
 
     _signInBloc = SignInBloc(ApiRepositoryImpl());
-    _selectedLocale = LocalizationPreferance.defaultLocale.languageCode;
   }
 
   @override
@@ -69,8 +66,8 @@ class SignInScreenState<T extends SignInScreen> extends State<T> {
   Widget renderAppBar({bool isWeb = false}) {
     return MainAppBarWidget(
         isWeb: isWeb,
-        selectedLocale: _selectedLocale,
-        onLocaleChange: _onLocaleChange);
+        selectedLocale: selectedLocale,
+        onLocaleChange: onLocaleChange);
   }
 
   Widget renderBody() {
@@ -134,25 +131,6 @@ class SignInScreenState<T extends SignInScreen> extends State<T> {
     );
   }
 
-  Widget _renderCompanyInfo() {
-    return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset('assets/icons/logo.png'),
-            const SizedBox(width: 9),
-            Image.asset('assets/icons/insurance_text.png'),
-          ],
-        ));
-  }
-
-  Widget _renderCompanyDetailsInfo({required String text}) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
-        child: Text(text.tr()));
-  }
-
   Widget _renderSignInButton() {
     return BlocBuilder<SignInBloc, SignInState>(builder: (context, state) {
       final isActive = (state is ButtonState) ? state.isActive : false;
@@ -182,15 +160,6 @@ class SignInScreenState<T extends SignInScreen> extends State<T> {
                         fontWeight: FontWeight.w700),
                   ))));
     });
-  }
-
-  void _onLocaleChange(String? val) {
-    Provider.of<LocaleChangeNotifer>(context, listen: false).changeLocale(val);
-    if (val != null) {
-      setState(() {
-        _selectedLocale = val;
-      });
-    }
   }
 
   BorderRadiusGeometry? get borderRadius => BorderRadius.circular(4);
