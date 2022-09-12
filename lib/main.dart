@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_registration_app/middleware/notifiers/locale_change_notifier.dart';
 import 'package:login_registration_app/middleware/repositories/api_respository_impl.dart';
-import 'package:login_registration_app/screens/recovery_password_screen.dart';
+import 'package:login_registration_app/screens/builders/recovery_password_screen_builder.dart';
 import 'package:login_registration_app/screens/registration_screen.dart';
-import 'package:login_registration_app/screens/mobile/sign_in_screen.dart';
 import 'package:login_registration_app/screens/builders/sign_in_screen_builder.dart';
 import 'package:login_registration_app/screens/verify_account_screen.dart';
 import 'package:login_registration_app/screens/welcome_screen.dart';
@@ -117,10 +116,11 @@ Widget _materialApp() {
                                     const SignInScreenBuilder());
                           }
 
-                          if (settings.name == RecoveryPasswordScreen.route) {
+                          if (settings.name ==
+                              RecoveryPasswordScreenBuilder.route) {
                             return MaterialPageRoute(
                                 builder: (context) =>
-                                    const RecoveryPasswordScreen());
+                                    const RecoveryPasswordScreenBuilder());
                           }
 
                           if (settings.name == RegistrationScreen.route) {

@@ -4,7 +4,9 @@ import '../constants/app_colors.dart';
 import 'detail_app_bar_widget.dart';
 
 class UnfocusScaffold extends StatelessWidget {
-  const UnfocusScaffold({required this.body, super.key});
+  const UnfocusScaffold({required this.body, this.appBar, super.key});
+
+  final Widget? appBar;
 
   final Widget body;
   @override
@@ -13,8 +15,9 @@ class UnfocusScaffold extends StatelessWidget {
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
           backgroundColor: AppColors.pampasColor,
-          appBar: const PreferredSize(
-              preferredSize: Size(0, 120), child: DetailAppBarWidget()),
+          appBar: PreferredSize(
+              preferredSize: const Size(0, 120),
+              child: appBar ?? const DetailAppBarWidget()),
           body: body,
         ));
   }

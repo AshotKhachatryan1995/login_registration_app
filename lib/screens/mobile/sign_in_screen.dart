@@ -6,6 +6,7 @@ import 'package:login_registration_app/constants/app_colors.dart';
 import 'package:login_registration_app/middleware/notifiers/locale_change_notifier.dart';
 import 'package:login_registration_app/middleware/repositories/api_respository_impl.dart';
 import 'package:login_registration_app/shared/app_localizations/localization.dart';
+import 'package:login_registration_app/shared/company_info_widget.dart';
 import 'package:login_registration_app/shared/info_button_row.dart';
 import 'package:login_registration_app/shared/main_app_bar_widget.dart';
 import 'package:login_registration_app/shared/horizontal_padded_widget.dart';
@@ -86,12 +87,9 @@ class SignInScreenState<T extends SignInScreen> extends State<T> {
       {MainAxisAlignment? mainAxisAlignment,
       String text =
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque egestas ultrices maecenas lorem massa mattis malesuada ullamcorper aliquam.'}) {
-    return Column(
-      mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
-      children: [
-        _renderCompanyInfo(),
-        _renderCompanyDetailsInfo(text: text),
-      ],
+    return CompanyInfoWidget(
+      text: text,
+      mainAxisAlignment: mainAxisAlignment,
     );
   }
 
