@@ -29,9 +29,11 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
         }
       }
     } catch (e) {
-      emit(UnAuthenticatedState());
 
       throw Exception(e.toString());
     }
+
+      emit(UnAuthenticatedState());
+
   }
 }

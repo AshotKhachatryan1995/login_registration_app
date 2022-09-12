@@ -4,7 +4,8 @@ import 'package:login_registration_app/middleware/notifiers/locale_change_notifi
 import 'package:login_registration_app/middleware/repositories/api_respository_impl.dart';
 import 'package:login_registration_app/screens/recovery_password_screen.dart';
 import 'package:login_registration_app/screens/registration_screen.dart';
-import 'package:login_registration_app/screens/sign_in_screen.dart';
+import 'package:login_registration_app/screens/mobile/sign_in_screen.dart';
+import 'package:login_registration_app/screens/builders/sign_in_screen_builder.dart';
 import 'package:login_registration_app/screens/verify_account_screen.dart';
 import 'package:login_registration_app/screens/welcome_screen.dart';
 import 'package:provider/provider.dart';
@@ -20,14 +21,17 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final appDocumentDirectory = await getApplicationDocumentsDirectory();
+  if (!kIsWeb) {
+    final appDocumentDirectory = await getApplicationDocumentsDirectory();
 
-  Hive.init(appDocumentDirectory.path);
-  Hive.registerAdapter(UserAdapter());
+    Hive.init(appDocumentDirectory.path);
+    Hive.registerAdapter(UserAdapter());
+  }
 
   /// Initialize preferences
   await SharedPrefs().init();
@@ -107,9 +111,10 @@ Widget _materialApp() {
                                     _mainRoute(context, state));
                           }
 
-                          if (settings.name == SignInScreen.route) {
+                          if (settings.name == SignInScreenBuilder.route) {
                             return MaterialPageRoute(
-                                builder: (context) => const SignInScreen());
+                                builder: (context) =>
+                                    const SignInScreenBuilder());
                           }
 
                           if (settings.name == RecoveryPasswordScreen.route) {
@@ -143,7 +148,7 @@ Widget _materialApp() {
 
 Widget _mainRoute(BuildContext context, NavigationState state) {
   if (state is UnAuthenticatedState) {
-    return const SignInScreen();
+    return const SignInScreenBuilder();
   }
 
   if (state is AuthenticatedState) {

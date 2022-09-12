@@ -12,6 +12,7 @@ class VerifyAccountBloc extends Bloc<VerifyAccountEvent, VerifyAccountState> {
       : super(InitialState()) {
     on<VerifyCodeEvent>(_onVerifyCodeEvent);
     on<SetNewPasswordEvent>(_onSetNewPasswordEvent);
+    on<ResendCodeEvent>(_onResendCodeEvent);
   }
 
   final ApiRepositoryImpl _apiRepositoryImpl;
@@ -76,6 +77,24 @@ class VerifyAccountBloc extends Bloc<VerifyAccountEvent, VerifyAccountState> {
       }
     } catch (e) {
       emit(PasswordUpdateInvalidState());
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<void> _onResendCodeEvent(
+      ResendCodeEvent event, Emitter<VerifyAccountState> emit) async {
+    emit(LoadingState());
+
+    try {
+      final result = await _apiRepositoryImpl.resendCode();
+
+      if (result is bool) {
+        emit(result
+            ? VerifyAccountSuccessedState()
+            : VerifyAccountInvalidState());
+      }
+    } catch (e) {
+      emit(VerifyAccountInvalidState());
       throw Exception(e.toString());
     }
   }

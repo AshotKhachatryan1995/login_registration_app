@@ -27,3 +27,5 @@ class SetNewPasswordEvent extends VerifyAccountEvent {
   @override
   List<Object> get props => [controllers, userName];
 }
+
+class ResendCodeEvent extends VerifyAccountEvent {}

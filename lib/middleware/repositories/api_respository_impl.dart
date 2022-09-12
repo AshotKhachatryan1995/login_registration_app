@@ -80,4 +80,7 @@ class ApiRepositoryImpl implements ApiRepository {
 
     return user;
   }
+
+  @override
+  Future<dynamic> resendCode() async {}
 }

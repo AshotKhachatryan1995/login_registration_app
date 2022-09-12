@@ -7,4 +7,5 @@ abstract class ApiRepository {
   Future<dynamic> setNewPassword(
       {required String userName, required String password});
   Future<dynamic> getUserByID({required String userId});
+  Future<dynamic> resendCode();
 }

@@ -35,7 +35,6 @@ class TextFieldWidget extends StatelessWidget {
           readOnly: readOnly,
           decoration: InputDecoration(
               prefixIcon: prefixIcon,
-              contentPadding: EdgeInsets.zero,
               label: Align(
                   alignment: textAlign == TextAlign.center
                       ? Alignment.center

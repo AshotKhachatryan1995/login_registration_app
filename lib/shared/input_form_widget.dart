@@ -6,14 +6,19 @@ import 'horizontal_padded_widget.dart';
 
 class InputFormWidget extends StatelessWidget {
   const InputFormWidget(
-      {required this.formTitle, required this.child, super.key});
+      {required this.formTitle,
+      required this.child,
+      this.mainAxisAlignment,
+      super.key});
 
   final String formTitle;
   final Widget child;
+  final MainAxisAlignment? mainAxisAlignment;
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
       children: [_renderTitle(), _renderForm()],
     );
   }

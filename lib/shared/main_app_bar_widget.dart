@@ -7,8 +7,12 @@ import '../constants/app_colors.dart';
 
 class MainAppBarWidget extends StatefulWidget {
   const MainAppBarWidget(
-      {required this.selectedLocale, required this.onLocaleChange, super.key});
+      {required this.isWeb,
+      required this.selectedLocale,
+      required this.onLocaleChange,
+      super.key});
 
+  final bool isWeb;
   final String selectedLocale;
   final StringCallback onLocaleChange;
 
@@ -33,10 +37,14 @@ class _MainAppBarWidgetState extends State<MainAppBarWidget> {
             child: Container(
                 margin: const EdgeInsets.only(top: 36, bottom: 36),
                 child: Row(
+                  mainAxisAlignment: widget.isWeb
+                      ? MainAxisAlignment.end
+                      : MainAxisAlignment.start,
                   children: [
-                    Container(
-                        margin: const EdgeInsets.only(left: 24),
-                        child: _renderLogo()),
+                    if (!widget.isWeb)
+                      Container(
+                          margin: const EdgeInsets.only(left: 24),
+                          child: _renderLogo()),
                     _renderIdWebsite(),
                     _renderLanguageArea()
                   ],

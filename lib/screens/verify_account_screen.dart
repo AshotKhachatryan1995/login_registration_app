@@ -95,8 +95,11 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                         textAlign: TextAlign.center,
                         readOnly: verified,
                       )),
-              const InfoButtonRow(
-                  message: 'Haven’t recieced yet?', buttonTitle: 'Resend'),
+              InfoButtonRow(
+                message: 'Haven’t recieced yet?',
+                buttonTitle: 'Resend',
+                onTapButton: () => _verifyAccountBloc.add(ResendCodeEvent()),
+              ),
               const SizedBox(height: 16),
               _renderChangePasswordArea()
             ])));
